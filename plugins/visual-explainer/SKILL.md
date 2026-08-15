@@ -27,7 +27,7 @@ Quick mode is opt-in. Use it only when `--quick` appears on `/generate-web-diagr
 
 For quick mode, read `./quick/README.md` and `./quick/schema.json`. Gather and verify the same source facts as full mode, but emit the compact JSON spec. In Pi, call the existing `visual_explainer` tool with `action: "render_quick"`, `filename`, `spec`, and optional `open` or `viewer`. In other harnesses, save the JSON and call the local `./quick/render.mjs` script. The renderer validates the spec and creates the complete HTML document.
 
-Quick mode is not suitable for custom visual composition, slides, Mermaid-rich topology, or content that the schema cannot express. If it is not a fit, schema validation fails, or rendering errors, fall back to the normal full HTML workflow and render action. Do not use quick mode for slides, fact-check, visual plans, PPTX, themes, or updates.
+Quick mode is not suitable for custom visual composition, slides, Mermaid-rich topology, or content that the schema cannot express. If it is not a fit, schema validation fails, or rendering errors, fall back to the normal full HTML workflow and render action. Do not use quick mode for slides, fact-check, visual plans, themes, or updates.
 
 ## Reference routing
 
@@ -86,7 +86,7 @@ Read only the references needed for the current output:
 
 ## Slide deck mode
 
-Use slides only when explicitly requested or when a command asks for slides. Slides are a different medium, not a paginated article. If the user explicitly asks for PPTX or passes `--pptx` to `/generate-slides`, generate the HTML deck first, then use the best-effort static exporter in `./pptx/export.mjs` or the `visual-explainer-pptx` binary when package or checkout dependencies are available. If they are not available, deliver the HTML deck and explain the missing export dependency path. State that HTML remains the source of truth and PPTX does not preserve animations, reader navigation, responsive layout, custom fonts, live Mermaid/Chart.js/SVG/canvas rendering, or JavaScript behavior.
+Use slides only when explicitly requested or when a command asks for slides. Slides are a different medium, not a paginated article. PPTX (`.pptx`) export is disabled in this fork: the upstream exporter depends on `pptxgenjs`, whose transitive `image-size` dependency has unfixed high-severity DoS bugs. If the user asks for PPTX or passes `--pptx`, deliver the HTML deck only and state that PPTX export is disabled. Do not improvise an alternate `.pptx` route.
 
 Slides rules:
 
@@ -114,7 +114,7 @@ Before delivery, verify:
 - tables preserve rows/columns and wrap long text;
 - Mermaid diagrams use `diagram-shell` with zoom/pan/expand;
 - a runtime picker, if present, swaps palette and font variables and re-renders every diagram;
-- slides fit one viewport, include reader rail plus outline/help navigation, and preserve source coverage; if PPTX was requested, the static `.pptx` was generated after the HTML deck and its fidelity limits were stated;
+- slides fit one viewport, include reader rail plus outline/help navigation, and preserve source coverage;
 - visual hierarchy makes the main idea obvious in the first viewport;
 - styling would still be recognizable if compared against a generic dark/violet template;
 - if requested, the Markdown companion is a concise source brief that matches the delivered HTML without becoming its source of truth.

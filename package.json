@@ -30,8 +30,6 @@
     "diff-review",
     "plan-review",
     "slides",
-    "pptx",
-    "powerpoint",
     "mermaid"
   ],
   "files": [
@@ -45,13 +43,10 @@
     "LICENSE"
   ],
   "bin": {
-    "visual-explainer-mcp": "./plugins/visual-explainer/mcp/server.mjs",
-    "visual-explainer-pptx": "./plugins/visual-explainer/pptx/export.mjs"
+    "visual-explainer-mcp": "./plugins/visual-explainer/mcp/server.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "^2.0.0",
-    "node-html-parser": "^9.0.1",
-    "pptxgenjs": "^4.0.1",
     "zod": "^4.4.3"
   },
   "peerDependencies": {

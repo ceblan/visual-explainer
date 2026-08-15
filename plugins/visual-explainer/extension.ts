@@ -65,50 +65,50 @@ const visualExplainerParameters = {
     action: {
       type: "string",
       enum: ["prepare", "render", "render_quick"],
-      description: "Choose prepare to plan, render to write complete HTML, or render_quick to validate a compact spec and render it locally.",
+      description: "prepare=plan, render=write complete HTML, render_quick=validate a compact spec and render locally.",
     },
     topic: {
       type: "string",
-      description: "For action=prepare: what the visual explanation should cover.",
+      description: "prepare: what the explanation covers.",
     },
     goal: {
       type: "string",
-      description: "For action=prepare: what the user wants to understand, decide, or communicate.",
+      description: "prepare: what the user wants to understand/decide/communicate.",
     },
     files: {
       type: "array",
       items: { type: "string" },
-      description: "For action=prepare: relevant files or paths the agent may inspect before generating the visual explanation.",
+      description: "prepare: relevant files to inspect.",
     },
     audience: {
       type: "string",
-      description: "For action=prepare: intended audience, such as developer, PM, team, reviewer, or executive.",
+      description: "prepare: developer, PM, team, reviewer, or executive.",
     },
     preferSubagent: {
       type: "boolean",
-      description: "For action=prepare: when true, recommend a scout subagent first if the subagent tool is active. Defaults to true.",
+      description: "prepare: recommend scout subagent first if active. Defaults to true.",
     },
     filename: {
       type: "string",
-      description: "For action=render: basename or slug for the output file. The tool appends .html if missing.",
+      description: "render/render_quick: basename or slug (.html appended if missing).",
     },
     html: {
       type: "string",
-      description: "For action=render: complete self-contained HTML document to write.",
+      description: "render: complete self-contained HTML document.",
     },
     spec: {
       type: "object",
-      description: "For action=render_quick: compact JSON spec that follows quick/schema.json.",
+      description: "render_quick: compact JSON spec per quick/schema.json.",
       additionalProperties: true,
     },
     open: {
       type: "boolean",
-      description: "For action=render or render_quick: open the written HTML file in the selected viewer. Defaults to true.",
+      description: "render/render_quick: open in viewer. Defaults to true.",
     },
     viewer: {
       type: "string",
       enum: ["browser", "glimpse", "auto"],
-      description: "For action=render or render_quick: choose browser, glimpse, or auto. Auto tries glimpseui first, then falls back to the browser. Defaults to browser.",
+      description: "render/render_quick: browser, glimpse, or auto (auto tries glimpseui first). Defaults to browser.",
     },
   },
   required: ["action"],

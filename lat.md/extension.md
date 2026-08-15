@@ -10,7 +10,7 @@ The Pi native tool (`visual_explainer`) registered by `extension.ts`. Provides p
 
 ## Actions
 
-Two actions: `prepare` for planning, `render` for writing and opening HTML.
+Three actions: `prepare` for planning, `render` for writing and opening complete HTML, and `render_quick` to validate a compact quick spec and render it locally.
 
 ### `prepare`
 
@@ -49,7 +49,8 @@ Writes complete HTML to `~/.agent/diagrams/` and opens it in the browser.
 | `action` | `"render"` | yes | Must be `"render"` |
 | `filename` | string | yes | Basename or slug (`.html` appended if missing) |
 | `html` | string | yes | Complete self-contained HTML document |
-| `open` | boolean | no | Open in browser (defaults to true) |
+| `open` | boolean | no | Open in viewer (defaults to true) |
+| `viewer` | string | no | `browser`, `glimpse`, or `auto` (auto tries glimpseui first; defaults to browser) |
 
 **Validation:**
 
@@ -72,6 +73,24 @@ The open call has a 250ms timeout — if the browser doesn't respond, it reports
 - `path` — full path to written file
 - `openAttempted`, `openStatus` (disabled/unsupported/dispatched/failed), `openError`
 
+### `render_quick`
+
+Validates a compact JSON spec and renders it locally to `~/.agent/diagrams/` via the bundled `quick/render.mjs` renderer. Intended only for explicit `--quick` prompts on `/generate-web-diagram`, `/diff-review`, `/plan-review`, or `/project-recap`.
+
+**Parameters:**
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| `action` | `"render_quick"` | yes | Must be `"render_quick"` |
+| `filename` | string | yes | Basename or slug (`.html` appended if missing) |
+| `spec` | object | yes | Compact JSON spec following `quick/schema.json` |
+| `open` | boolean | no | Open in viewer (defaults to true) |
+| `viewer` | string | no | `browser`, `glimpse`, or `auto` (defaults to browser) |
+
+**Behavior:** Calls `renderQuickSpec(spec)` to validate the spec and produce complete HTML, then writes it through the same path as `render`. If the spec does not fit or rendering fails, fall back to the full HTML workflow and `action: "render"`. Not suitable for slides, themes, or custom visual composition.
+
+**Returns:** Same shape as `render` — `path`, `viewer`, `openAttempted`, `openStatus`, `openError`.
+
 ## Prompt guidelines
 
 The tool includes `promptGuidelines` that shape agent behavior:
@@ -80,12 +99,13 @@ The tool includes `promptGuidelines` that shape agent behavior:
 2. Ask before calling `prepare` unless the user explicitly requested visual output
 3. If `prepare` recommends subagent scouting, gather context first, then generate HTML, then call `render`
 4. Use `render` only after generating complete HTML — pass a basename filename
+5. Use `render_quick` only for an explicit `--quick` prompt; if it fails or does not fit, use the full HTML workflow and `render`
 
 ## Integration with slash commands
 
 The extension complements the slash commands rather than replacing them:
 
 - `/generate-web-diagram` remains the prompt template for general diagrams
-- The extension adds a two-step `prepare` → `render` flow for Pi-native installs
+- The extension adds a `prepare` → `render` flow (plus a `render_quick` shortcut for explicit `--quick` prompts) for Pi-native installs
 - The `prepare` action can recommend subagent scouting (not available in prompt-template-only flows)
 - The `render` action handles browser opening and file validation (harder to do from a prompt template alone)

@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+### Removed
+- Removed the best-effort PPTX (`.pptx`) export utility, the `visual-explainer-pptx` binary, and the `pptxgenjs` and `node-html-parser` dependencies. The upstream `pptxgenjs` pulls in `image-size`, which has unfixed high-severity denial-of-service (infinite-loop) bugs with no fixed version available. Slide decks are now delivered as HTML only.
+
 ### Fixed
 - Synchronized Claude Code marketplace and skill metadata versions to `0.9.0` after the mismatch reported by @romkazor in #83.
 
