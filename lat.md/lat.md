@@ -16,6 +16,7 @@ Replaces ASCII art and pipe tables with real typography, dark/light themes, and 
 - [[installation]] — all installation methods across harnesses
 - [[design-principles]] — anti-slop guardrails, typography, color, and quality checks
 - [[tests]] — test specs for the skill and extension
+- [[last-commit]] — most recent tracked commit hash for documentation sync
 
 ## Quick start
 

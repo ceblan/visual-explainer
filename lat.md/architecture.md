@@ -1,6 +1,6 @@
 # Architecture
 
-How the visual-explainer skill is structured: a core skill definition, seven command templates, four reference docs, four HTML templates, a Pi extension, and a Claude Code marketplace plugin.
+How the visual-explainer skill is structured: a core skill definition, seven command templates, five reference docs, four HTML templates, a Pi extension, and a Claude Code marketplace plugin.
 
 ## File tree
 
@@ -19,18 +19,27 @@ configs/
 plugins/visual-explainer/
   .claude-plugin/plugin.json ← plugin manifest (marketplace)
   SKILL.md                   ← core skill definition + design principles
-  extension.ts               ← Pi native tool (prepare + render)
+  extension.ts               ← Pi native tool (prepare, render, render_quick)
   commands/                  ← slash command templates (7 commands)
   references/                ← agent-read docs before generating
     css-patterns.md          ← layouts, animations, theming
     libraries.md             ← Mermaid, Chart.js, fonts
     responsive-nav.md        ← sticky TOC for multi-section pages
     slide-patterns.md        ← slide engine, transitions, presets
+    themes.md                ← 11 prebuilt palettes + runtime picker
   templates/                 ← reference HTML templates with distinct palettes
     architecture.html        ← CSS Grid cards, terracotta/sage
     mermaid-flowchart.html   ← Mermaid + ELK, teal/cyan
     data-table.html          ← HTML table + KPIs, rose/cranberry
     slide-deck.html          ← 10 slide types, Midnight Editorial
+  mcp/
+    README.md                ← MCP server docs
+    server.mjs               ← stdio MCP server implementation
+  quick/
+    README.md                ← quick renderer docs
+    base.css                 ← shared styles for quick-mode output
+    render.mjs               ← validates JSON spec → HTML
+    schema.json              ← authoritative quick-mode JSON Schema
 install-pi.sh                ← legacy Pi installer (copies skill + prompts)
 package.json                 ← npm metadata, pi config
 README.md                    ← overview + install matrix
@@ -81,9 +90,38 @@ The marketplace namespaces commands as `/visual-explainer:command-name`.
 }
 ```
 
-- **extensions** — the `visual_explainer` tool (prepare + render)
+- **extensions** — the `visual_explainer` tool (prepare, render, render_quick)
 - **skills** — the `SKILL.md` with routing rules and design principles
 - **prompts** — the seven command template markdown files
+
+## MCP server
+
+The `mcp/server.mjs` is a stdio-only MCP (Model Context Protocol) server. It is meant for MCP hosts that launch a local child process. It does not start an HTTP listener, handle credentials, call an LLM, or store output outside the local machine.
+
+**Exposed tools:**
+- `visual_explainer_prepare` — returns a recommended visual explanation flow
+- `visual_explainer_render_html` — validates a complete HTML document and writes it to `~/.agent/diagrams/`
+- `visual_explainer_render_quick` — validates a quick-mode JSON spec and writes rendered HTML
+
+**Exposed prompts:** the seven command templates as MCP prompts (`generate-web-diagram`, `generate-visual-plan`, `generate-slides`, `diff-review`, `plan-review`, `project-recap`, `fact-check`).
+
+**Exposed resources:** read-only access to `SKILL.md`, command templates, quick README, and quick schema JSON.
+
+Rendered files are written only to `~/.agent/diagrams/`. Filenames must be basenames. Paths, traversal, control characters, and symlink targets are rejected.
+
+## Quick render system
+
+Compact JSON-to-HTML renderer for explicit `--quick` prompts. The agent emits a JSON spec; `render.mjs` validates it and produces complete self-contained HTML.
+
+**Intended use:** `/generate-web-diagram --quick`, `/diff-review --quick`, `/plan-review --quick`, or `/project-recap --quick`. If the spec does not fit or rendering fails, fall back to the full HTML workflow.
+
+**Components:**
+- `quick/schema.json` — authoritative JSON Schema for the spec
+- `quick/render.mjs` — validates the spec and renders HTML
+- `quick/base.css` — shared styles for quick-mode output
+- `quick/README.md` — usage guide for Pi and other harnesses
+
+**Pi integration:** the extension's `render_quick` action accepts a `spec` object and calls `renderQuickSpec(spec)` to produce HTML, then writes it through the same path as `render`.
 
 ## Template palette strategy
 

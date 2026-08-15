@@ -91,6 +91,12 @@ Slide-specific readability rules for projection and screen sharing.
 - Nav chrome visible on any background
 - Simpler Mermaid diagrams (max 8–10 nodes, 18px+ labels)
 
+## Output format constraint
+
+All visual output is HTML-only. PPTX export was removed for security.
+
+The `pptxgenjs` dependency (and its transitive `image-size` dependency) carried unfixed high-severity DoS vulnerabilities with no upstream fix. The `pptx/` exporter, the `visual-explainer-pptx` binary, and all related dependencies were removed. Slide decks are rendered as self-contained HTML slide decks instead.
+
 ## Auto-detection
 
 The agent automatically kicks in for complex tables — 4+ rows or 3+ columns triggers HTML rendering instead of terminal output. The agent gives a short chat summary and renders the full table as HTML.

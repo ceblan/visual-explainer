@@ -5,6 +5,7 @@ import { join } from "node:path";
 import type { AgentToolResult, ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { renderQuickSpec } from "./quick/render.mjs";
 
+// @lat: [[lat.md/extension#Extension#Actions]]
 type VisualExplainerParams = {
   action: "prepare" | "render" | "render_quick";
   topic?: string;

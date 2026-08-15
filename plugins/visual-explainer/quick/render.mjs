@@ -52,6 +52,7 @@ function checkObjectArray(value, path, errors, allowed, required, validate) {
   });
 }
 
+// @lat: [[lat.md/architecture#Architecture#Quick render system]]
 export function validateQuickSpec(value) {
   const errors = [];
   if (!isRecord(value)) return ["spec must be an object"];

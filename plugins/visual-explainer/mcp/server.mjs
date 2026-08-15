@@ -9,6 +9,7 @@ import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import * as z from "zod/v4";
 import { renderQuickSpec } from "../quick/render.mjs";
 
+// @lat: [[lat.md/architecture#Architecture#MCP server]]
 const serverPath = fileURLToPath(import.meta.url);
 const mcpDir = dirname(serverPath);
 const skillDir = dirname(mcpDir);

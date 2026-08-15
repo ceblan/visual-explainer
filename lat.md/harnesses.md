@@ -14,6 +14,8 @@ Which harnesses are supported and what each provides.
 | OpenCode | Manual | Yes | Optional | No | Copy to `~/.config/opencode/skill/` |
 | Cursor | Rules guidance | Via rules | No direct | No | Add `.mdc` rule file |
 | OpenClaw | Rules guidance | Via rules | No direct | No | Copy `AGENTS.md` |
+| Antigravity | Rules guidance | Via rules | No direct | No | Copy `AGENTS.md` |
+| Copilot | Rules guidance | Via rules | No direct | No | Copy `AGENTS.md` |
 
 ## Claude Code
 
@@ -106,3 +108,33 @@ Lightweight rules guidance — no plugin adapter.
 **Install:** Use `configs/openclaw/AGENTS.md` as project guidance. Copy or reference `plugins/visual-explainer/` as the canonical skill source.
 
 **Limitations:** No command templates, no native tool. The agent reads SKILL.md and follows its workflow when producing diagrams, reviews, or slide decks.
+
+## Antigravity
+
+Native Agent Skills support via `~/.gemini/antigravity-cli/skills/visual-explainer` or workspace `.agents/skills/visual-explainer`.
+
+**Install globally:**
+```bash
+mkdir -p ~/.gemini/antigravity-cli/skills
+cp -R plugins/visual-explainer ~/.gemini/antigravity-cli/skills/visual-explainer
+```
+
+**Install in workspace:**
+```bash
+mkdir -p .agents/skills
+cp -R plugins/visual-explainer .agents/skills/visual-explainer
+```
+
+**Invoke:** Launch `agy` and run `/skills` to confirm discovery. Ask Antigravity to use the `visual-explainer` skill.
+
+**Limitations:** No separate plugin adapter shipped. Command markdown files remain reference prompts.
+
+## Copilot
+
+Custom instruction / rules guidance for VS Code Copilot and Copilot CLI.
+
+**Install:** Copy `configs/copilot/AGENTS.md` into `.github/copilot-instructions.md` or use as workspace instruction.
+
+**Invoke:** Copilot reads `plugins/visual-explainer/SKILL.md` and follows its workflow when asked for diagrams, reviews, or slide decks.
+
+**Limitations:** No native skill, package, or plugin adapter. Command markdown files serve as reference templates.

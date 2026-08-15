@@ -1,10 +1,10 @@
 # References
 
-Four reference docs that the agent reads before generating HTML. They contain reusable CSS patterns, library guidance, navigation components, and slide-specific patterns. The agent reads only the references needed for the current output.
+Five reference docs the agent reads before generating HTML. Contains reusable CSS patterns, library guidance, navigation components, slide patterns, and prebuilt themes.
 
 ## Reference overview
 
-Four docs the agent reads before generating HTML. The agent reads only what the current output needs.
+Five docs the agent reads before generating HTML. The agent reads only what the current output needs.
 
 | File | Size | Purpose |
 |------|------|---------|
@@ -12,6 +12,7 @@ Four docs the agent reads before generating HTML. The agent reads only what the 
 | `libraries.md` | ~800 lines | Mermaid theming, Chart.js, anime.js, Google Fonts |
 | `responsive-nav.md` | ~150 lines | Sticky sidebar TOC, mobile horizontal bar, scroll spy |
 | `slide-patterns.md` | ~700 lines | Slide engine, 10 types, transitions, nav chrome, presets |
+| `themes.md` | ~400 lines | 11 prebuilt palettes + runtime theme picker |
 
 ## `css-patterns.md`
 
