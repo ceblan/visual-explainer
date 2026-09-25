@@ -1,13 +1,13 @@
 # Documentation Sync Report
 
-**Tracked range**: `git log -3` (no previous tracker found). Last tracked commit now: `69ad1632a29b67d9db63911fb4242f4b64fb3cce`.
+**Tracked range**: `69ad1632a29b67d9db63911fb4242f4b64fb3cce..HEAD`. Last tracked commit now: `4ba6d0427232ab9312b6388cb3bf3000eb83e0d9`.
 
 ## Commits Reviewed
 | Commit | Message | Documented | Action |
 |--------|---------|-----------|--------|
-| ff8cd155 | fix: sync marketplace plugin version | Yes (existing) | Version bump — no functional change, skipped |
-| b0cf7393 | Merge branch 'main' into ceb-dev | Yes | Added MCP server, quick render, themes docs to lat.md |
-| 69ad1632 | Remove PPTX export for security; trim visual_explainer schema | Yes | Updated extension.md for render_quick and viewer; documented PPTX removal in design-principles.md |
+| 4ba6d042 | lat doc++ | Yes (self-documenting) | Verified existing @lat tags and sections cover the commit's changes |
+
+_If no new commits were found, replace the table with: "No new commits since last tracked (`<hash>`)."_
 
 ## @lat Tags Added
 | File | Line | Tag |
@@ -21,22 +21,13 @@
 - Errors fixed: none
 
 ## Additional Actions
-- Updated architecture.md file tree to include mcp/, quick/, and themes.md
-- Added MCP server section to architecture.md
-- Added Quick render system section to architecture.md
-- Added Output format constraint (PPTX removal) to design-principles.md
-- Updated references.md to list themes.md as fifth reference doc
-- Updated harnesses.md to include Antigravity and Copilot configs
-- Updated architecture.md prose: "four reference docs" → "five reference docs", "prepare + render" → "prepare, render, render_quick"
-- Added last-commit tracker at lat.md/last-commit.md (validated successfully)
+- Read AGENTS.md and lat-md SKILL.md obligations
+- Updated last-commit tracker to `4ba6d0427232ab9312b6388cb3bf3000eb83e0d9` using heredoc+sed pattern from pi-memory
+- Verified tracker passes all validation checks (no placeholders, valid hash, all fields present)
 
 ## Graph, Bridge & Ontology Refresh
 
-| Action | Status | Details |
-|--------|--------|---------|
-| graphify update | ⏭️ skipped | No graphify-out/graph.json found in project root |
-| bridge-build | ⏭️ skipped | No graphify-out/graph.json found in project root |
-| ontology-build | ⏭️ skipped | No ontology/ directory found in project root |
+Skipped — no graphify-out/graph.json and no ontology/ found in project root.
 
 ## Summary
 lat.md is fully in sync with the codebase.
